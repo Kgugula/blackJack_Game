@@ -1,3 +1,4 @@
+# Simple 'Card' Class - each card has a suit & value
 class Card:
     SUIT_SYMBOLS = {
         0: u"\u2666",  # diamonds
@@ -22,8 +23,14 @@ class Card:
         13: "K"
     }
 
-    def __init__(self):
-        pass
+    def __init__(self, suit, value):
+        self.suit = suit
+        self.value = value
+
+        # These paramters will be passed by the Deck method 'create_deck'
 
     def __str__(self):
-        pass
+        return (self.value + self.suit)
+
+        # converts value & suit to str value i.e. Ace (value) of Spades (unicode symbol)
+
