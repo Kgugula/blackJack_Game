@@ -34,11 +34,13 @@ class Deck:
             for card in cards_to_deal:
                 self.cards.remove(card)
                 to_return_cards.append(card)
-
     
+            return to_return_cards
+        else:
+            cards_to_deal = self.cards[-num_cards]
+            to_return_cards.append(cards_to_deal)
+            self.cards.remove(cards_to_deal)
             return to_return_cards
 
 
-        to_return_cards.append(self.cards[-1])
-        self.cards.remove(to_return_cards)
-        return to_return_cards
+
