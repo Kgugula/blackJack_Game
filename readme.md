@@ -19,3 +19,18 @@ And now the real fun begins...implementing the logic behind the game, when does 
 Passed a major hurdle yesterday. I was having trouble with tracking values between different classes (b/w Deck, Hand, Player, Dealer) classes. Specifically, I had Hand() objects which were not tracked to a specific instance of the Player or Dealer classes. This made the program feel very verbose and chunky, as I was constantly creating new variables to hold values in place, and to manually pass to the other objects that required them. This was giving me a headache and I was the one who wrote the code. The solution I found was instantiating a Hand() object upon instatiation of a Player object. So I could use all of the Hand() methods and attributes directly on the instance because it was located nicely inside the  'self.player object' or 'self.dealer' attribute of the Game() class, which were in themselves Player() and Dealer() objects themselves. Need a win and I got it. Making a mental note here that if your code 'feels' like it is ugly and doing too many unneccessary things...it probably is.
 
 With that being said the bulk of work is now done on the project. Only a few things left to do like handle the edge case when the player is dealt a natural blackjack. I also need to implement some code (maybe a function within the Game() class) to end the game, or simply move on to the next round and start again when it is necessary. Right now the player could hit on their turn, bust, and the program would still go on to the dealer's turn. 
+
+## Day 7 ## 
+
+Finished the program!
+
+It took awhile to debug - but it was fun. I might have played 50 hands or so and just had to make sure classes/functions where doing what they were meant to. Odd enough, for the case of the 'natural blackjack' it took some time to properly implement, I was getting a lot of small errors. 
+
+New additions to improve use:
+    - Game attribute called 'exit_program' which ends the program if the user enters 'no' to the first prompt
+    - New static method in 'Game' class - end_game(player, dealer). Takes in two argument; self.player, and self.dealer from previous game. This way the player balance is carried forward. 
+
+Further additions:
+    - In the coming days I'm going to work through the code and see if I can shorten it if possible. Also going to add additional comments to explain the flow of the program. 
+
+
