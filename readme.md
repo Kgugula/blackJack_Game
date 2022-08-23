@@ -35,4 +35,8 @@ Further additions:
 
 ## Final Comments ##
 
+I decided to go over the code and clean it up and add comments where necessary. I ended up removing some redundent blocks that were not doing anything - e.g 'Game' attribute 'exit_program' didn't actually do anything, just was switched to 'True' before the program ended. Did not need it. Also, went back and forth and adding & deleting the @staticmethod decorator above the end_game() function. It doesn't 'need' it, but I think it is good for whoever might open the code to know, hey, I don't want this method access to 'self.' Please someone send me an email if I am way wrong on that. 
+
+
+On to the next project!
 
