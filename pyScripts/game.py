@@ -17,7 +17,8 @@ class Game:
 
         # Function ends game - creates new Game object with self.player and self.dealer passed to it
         # If arguments not passed then we don't want to start another game - final print statement is below
-    
+
+    @staticmethod
     def end_game(player, dealer):
 
         # start_game function will deliberately cause 'TypeError' when
@@ -57,7 +58,8 @@ class Game:
             if userInput.lower() == "yes":
                               break
             elif userInput.lower() == "no":
-                print("Exit Program.")
+                print(f"You left with ${self.player.balance}. ")
+                print("Exit Program...")
                 Game.end_game()
 
         # While loop to prompt user to enter bet amount. Subject to contraints
