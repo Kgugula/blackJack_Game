@@ -14,12 +14,14 @@ class Game:
         self.dealer = dealer
         self.bet = None
         self.deck = Deck()
-        self.exit_program = False
 
         # Function ends game - creates new Game object with self.player and self.dealer passed to it
         # If arguments not passed then we don't want to start another game - final print statement is below
     
     def end_game(player, dealer):
+
+        # start_game function will deliberately cause 'TypeError' when
+        # the program is ending; i.e. pass the function with no parameters
         
         try:
             new_game = Game(player, dealer)
@@ -39,7 +41,6 @@ class Game:
             if self.player.balance == 0:
                 print("-------------------")
                 print("You lost all of your money. Exiting program...")
-                self.exit_program = True
                 Game.end_game()
 
         # If not the first round; use class method clear_hand() on Hand objects
@@ -56,7 +57,6 @@ class Game:
             if userInput.lower() == "yes":
                               break
             elif userInput.lower() == "no":
-                self.exit_program = True
                 print("Exit Program.")
                 Game.end_game()
 
