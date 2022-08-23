@@ -18,7 +18,8 @@ class Deck:
 
         ''' Traverse through dictionaries in 'Card' class
             and initialize deck by creating new 'Card' object - I added a __len__ dunder method
-            earlier to confirm that 52 elements added to list self.cards '''
+            earlier to confirm that 52 elements added to list self.cards
+        '''
                 
 
     def shuffle(self):
@@ -32,7 +33,7 @@ class Deck:
         if num_cards > 1:
             cards_to_deal = self.cards[-num_cards:] # deal last 'n' cards out of shuffled deck
             for card in cards_to_deal:
-                self.cards.remove(card)
+                self.cards.remove(card) 
                 to_return_cards.append(card)
     
             return to_return_cards

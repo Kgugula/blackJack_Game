@@ -3,6 +3,9 @@ from hand import Hand
 from player import Player
 
 class Game:
+    
+    # Class attributues
+    
     MINIMUM_BET = 1
     ROUND = 1
 
@@ -13,26 +16,43 @@ class Game:
         self.deck = Deck()
         self.exit_program = False
 
-    @staticmethod
+        # Function ends game - creates new Game object with self.player and self.dealer passed to it
+        # If arguments not passed then we don't want to start another game - final print statement is below
+    
     def end_game(player, dealer):
+        
         try:
             new_game = Game(player, dealer)
             return new_game.start_game()
-            
-        except:
+        
+        except TypeError:
             print("The program has ended.")
 
     def start_game(self):
 
         # While loop to confirm if user (player) would like to "join" table
+        
         while True:
-            userInput = input(f"You are staring with ${self.player.balance}. Would you like to play a hand? ")
 
-            # If not the first round; use class method clear_hand() on hand objects
+        # If player balance is '0' - end program
+        
+            if self.player.balance == 0:
+                print("-------------------")
+                print("You lost all of your money. Exiting program...")
+                self.exit_program = True
+                Game.end_game()
+
+        # If not the first round; use class method clear_hand() on Hand objects
+        # Note that ROUND is an attribute of the 'Game' class
+        
             if Game.ROUND != 1:
                 self.player.hand.clear_hand()
                 self.dealer.hand.clear_hand()
-                
+
+        # Accept user input
+
+            userInput = input(f"You are staring with ${self.player.balance}. Would you like to play a hand? ")
+
             if userInput.lower() == "yes":
                               break
             elif userInput.lower() == "no":
@@ -41,7 +61,9 @@ class Game:
                 Game.end_game()
 
         # While loop to prompt user to enter bet amount. Subject to contraints
+        
         while True:
+            
             userBet = int(input("Place your bet: " ))
             if userBet < Game.MINIMUM_BET:
                 print("The minimum bet is $1")
@@ -52,23 +74,22 @@ class Game:
             else:
                 self.bet = userBet
                 break
-
-            ''' At the start of the game need to
-                deal two cards to both the dealer and player. Going
-                to create a function to do this '''
+            
 
         # Okay now we begin...
 
         '''
-            Watch out for the instance attributes and the functions called from them
-            many classes instantiate other classes upon their instantiation
+            Watch out for the instance attributes and the functions called from them.
+            Many classes instantiate other classes upon their instantiation
             E.g. Player & Dealer both instantiate a Hand object from their respective
-            __init__ methods
+            __init__ methods. See respective scripts for more information
 
         '''
             
-            
         cards_to_deal = 2
+
+        # Connected to above comment
+        # 'Player' object is an attribute of 'Game' class. Likewise, 'Hand' object is an attribute of 'Player' class
 
         self.player.hand.add_to_hand(self.deck.deal(cards_to_deal))
         self.dealer.hand.add_to_hand(self.deck.deal(cards_to_deal))
@@ -85,7 +106,7 @@ class Game:
 
         cards_to_deal -= 1
 
-        # Variable for edge case; player has a natural blackjack
+        # Variable for edge case; player has a natural blackjack; intialize to 'False'
 
         player_natural_blackjack = False
 
@@ -93,8 +114,9 @@ class Game:
 
         while True:
 
-            # Edge case for if its a natural blackjack
-            # Want to exit turn - no prompt for hit or stay
+        # Edge case for if its a natural blackjack
+        # Want to exit turn - no prompt for hit or stay
+            
             if self.player.hand.get_value() == 21 and len(self.player.hand) == 2:
                 player_natural_blackjack = True
                 break
@@ -123,7 +145,7 @@ class Game:
                 print("That is not a valid option.")
 
         # Dealer turn begins
-        # First have to replace placeholder "Unknown" with actual card deal
+        # First have to replace placeholder "Unknown" with actual card dealt
 
         self.dealer.hand.cards[1] = dealer_placeholder
         print(f"The dealer has: {self.dealer.hand}")
@@ -136,11 +158,22 @@ class Game:
                 self.player.balance += 50000
                 Game.ROUND += 1
                 return Game.end_game(self.player, self.dealer)
+
+        # If player has blackjack and dealer does not - end round. No option for dealer to hit or stay
+        
             else:
-                print(f"Blackjack! You win ${round((1.5 * self.bet))}")
+                print(f"Blackjack! You win ${round((1.5 * self.bet))}.")
                 self.player.balance += round((1.5 * self.bet))
                 Game.ROUND += 1
                 return Game.end_game(self.player, self.dealer)
+
+        # If the dealer has a blackjack and the player does not; player loses
+
+        if self.dealer.hand.get_value() == 21:
+            print(f"Dealer has blackjack! You lose ${self.bet}.")
+            self.player.balance -= self.bet
+            Game.ROUND += 1
+            return Game.end_game(self.player, self.dealer)
 
         
         # Check to see if dealer 'needs' to hit
@@ -153,7 +186,7 @@ class Game:
             # If dealer busts off this hit, game is over. Double the bet amount and assign to player balance
             if self.dealer.hand.get_value() > 21:
                 print(f"The dealer busts, you win ${self.bet} :)")
-                self.player.balance += (2 * self.bet)
+                self.player.balance += self.bet
                 Game.ROUND += 1
                 return Game.end_game(self.player, self.dealer)
 
@@ -168,7 +201,7 @@ class Game:
 
         if self.player.hand.get_value() > self.dealer.hand.get_value():
             print(f"You win ${self.bet}")
-            self.player.balance += (2 * self.bet)
+            self.player.balance += self.bet
         elif self.player.hand.get_value() == self.dealer.hand.get_value():
             print(f"Tie game! Bet is returned.")
             Game.ROUND += 1
@@ -177,6 +210,8 @@ class Game:
             print(f"The dealer wins, you lose ${self.bet} :(")
             self.player.balance -= self.bet
 
+        # Increment round
+        
         Game.ROUND += 1
 
         return Game.end_game(self.player, self.dealer)

@@ -1,4 +1,5 @@
 # Simple 'Card' Class - each card has a suit & value
+
 class Card:
     SUIT_SYMBOLS = {
         0: u"\u2666",  # diamonds

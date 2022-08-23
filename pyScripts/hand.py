@@ -15,7 +15,7 @@ class Hand:
                     "A": "A"
         
         }
-    # Dict to store card values. B/c card object is a string
+    # Dict to store card values. B/c 'Card' object is a string
     
     def __init__(self):
         self.cards = []
@@ -30,6 +30,7 @@ class Hand:
             values_list.append(Hand.CARD_VALUES[card[0]])
 
         # Ignore value add of aces until the optimal value determined; below
+        
         for value in values_list:
                 if value != "A":
                     values += value
@@ -39,11 +40,11 @@ class Hand:
 
         '''
         Enter while loop when hand has MULTIPLE aces.
-        We know the at most only one ace can hold the value of '11,'
+        We know at most only one ace can hold the value of '11,'
         i.e. if two aces both held '11' hand.get_value() > 21.
         If current value of 'values' variable is less than '9'
-        then we have room for one ace to hold and '11' and ALL subsequent aces
-        must hold a '1.' Note that after adding += 11 when the first ace is removed,
+        then we have room for one ace to hold an '11' and ALL subsequent aces
+        must hold a '1.' Note that after adding value += 11 when the first ace is removed and take the value of '11',
         values variable will ALWAYS be greater than '9' and we will not enter first
         'if' statement below. Need to keep second 'if' statement in 'while' loop below
         in case there are 3 or 4 aces in hand. 
@@ -79,16 +80,19 @@ class Hand:
             self.cards.append(card)
 
     # Method to clear hand; for the start of new rounds
+    
     def clear_hand(self):
 
         self.cards *= 0
+
+    # Dunder methods
            
     def __str__(self):
 
         str_hand = ', '.join([str(x)for x in self.cards])
         return str_hand
 
-        # player script has identical function. Necessary?
+    # Player script has identical function __str__. Necessary?
 
     def __len__(self):
         count = 0
